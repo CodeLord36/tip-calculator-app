@@ -4,10 +4,74 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tip Calculator App</title>
+    <meta name="description" content="Calculate tips and split bills easily with the Tip Calculator.">
+    <title>Frontend Mentor | Tip Calculator App</title>
   </head>
   <body>
-    <div id="app"></div>
+    <!-- Main Container -->
+    <main>
+      <!-- Logo -->
+      <header>
+        <img src="/images/logo.svg" alt="logo" />
+      </header>
+
+      <!-- Calculator Card Section -->
+      <div>
+        <!-- Input Section -->
+        <section>
+          <div>
+            <label for="bill">Bill</label>
+            <input type="number" name="bill" id="bill" />
+          </div>
+
+          <fieldset>
+            <legend>Select Tip %</legend>
+            <div>
+              <button type="button">5%</button>
+              <button type="button">10%</button>
+              <button type="button">15%</button>
+              <button type="button">25%</button>
+              <button type="button">50%</button>
+              <button type="button">Custom</button>
+            </div>
+
+            <label for="numberOfPeople">Number of people</label>
+            <input type="number" name="numberOfPeople" id="numberOfPeople" />
+          </div>
+          </fieldset>
+        </section>
+
+        <!-- Result Section -->
+        <section>
+          <div>
+            <div>
+              <h2>Tip Amount</h2>
+              <p>/ person</p>
+            </div>
+
+            <output>$0.00</output>
+          </div>
+          <div>
+            <div>
+              <h2>Total</h2>
+              <p>/ person</p>
+            </div>
+
+            <output>$0.00</output>
+          </div>
+
+          <button type="button">Reset</button>
+        </section>
+      </div>
+
+      <!-- Footer -->
+      <footer>
+        Challenge by
+        <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a
+        >. Coded by
+        <a href="https://github.com/CodeLord36">CodeLord36</a>
+      </footer>
+    </main>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
