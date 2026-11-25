@@ -1,4 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap");
 
 @import "bootstrap/dist/css/bootstrap.min.css";
-@import "bootstrap";
+
+@import "./_variables.css";
+@import "./_utilities.css";
+@import "./_reset.css";

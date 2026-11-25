@@ -1,0 +1,16 @@
+:root {
+  /* Custom colors */
+  /* Primary colors */
+  --custom-green: hsl(172, 67%, 45%);
+
+  /* Neutral colors */
+  --custom-green-900: hsl(183, 100%, 15%);
+  --custom-grey-500: hsl(186, 14%, 43%);
+  --custom-grey-400: hsl(184, 14%, 56%);
+  --custom-grey-200: hsl(185, 41%, 84%);
+  --custom-grey-50: hsl(189, 47%, 97%);
+  --custom-white: hsl(0, 100%, 100%);
+
+  /* Custom font */
+  --font-space-mono: "Space Mono", sans-serif;
+}
