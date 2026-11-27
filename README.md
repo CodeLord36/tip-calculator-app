@@ -39,8 +39,8 @@ Users should be able to:
 
 ### Screenshot
 
-![Desktop View](./desktop-preview.png)
-![Mobile View](./mobile-preview.png)
+![Desktop View](./preview-desktop.png)
+![Mobile View](./preview-mobile.png)
 
 ### Links
 
