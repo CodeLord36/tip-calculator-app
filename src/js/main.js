@@ -1,4 +1,9 @@
 import "../style.css";
+import {
+  calculateTip,
+  calculateTipPerPerson,
+  calculateTotalAmountPerPerson,
+} from "./calculator";
 
 console.log("Tip Calculator App is ready");
 
@@ -7,8 +12,6 @@ const customTipInput = document.querySelector("#customTip");
 const numberOfPeople = document.querySelector("#numberOfPeople");
 
 // Tip Button
-// const tipButtons = document.querySelector("#tipButtons");
-// const tipButtons = document.querySelectorAll("#tipButtons");
 const tipBtns = document.querySelectorAll(".tipBtn");
 
 // Result elements
@@ -18,53 +21,66 @@ const totalAmount = document.querySelector("#totalAmount");
 //Reset Button
 const resetBtn = document.querySelector("#resetBtn");
 
-// Log all element values
-// console.log(billInput);
-// console.log(customTipInput);
-// console.log(numberOfPeople);
-// console.log(tipButtons);
-// console.log(tipAmount);
-// console.log(totalAmount);
-// console.log(resetBtn);
+// Default tip percentage value created
+let selectedTip = null;
 
-console.log(billInput.value);
-console.log(customTipInput.value);
-console.log(numberOfPeople.value);
-// console.log(tipButtons.value);
-console.log(tipBtns.values);
-
-console.log(tipAmount.value);
-console.log(totalAmount.value);
-console.log(resetBtn.value);
-
-billInput.addEventListener("input", () => {
+// function for calculation
+function updateCalculator() {
   const bill = parseFloat(billInput.value);
-  console.log("The Bill has been changed to - ", bill);
-});
+  const people = parseInt(numberOfPeople.value);
 
-// tipButtons.addEventListener("click", (event) => {
-//   const tipPercentage = Number(event.currentTarget.dataset.tip);
+  // checking between either the selected and custom tip
+  const tipPercentage =
+    customTipInput.value.trim() !== ""
+      ? parseFloat(customTipInput.value)
+      : selectedTip;
 
-//   console.log("Selected Tip: ", tipPercentage);
-// });
+  // using the calculation functions
+  const tip = calculateTip(bill, tipPercentage);
+  const tipPerPerson = calculateTipPerPerson(tip, people);
+  const amountPerPerson = calculateTotalAmountPerPerson(bill, tip, people);
 
-// tipButtons.forEach((button) => {
-//   button.addEventListener("click", () => {
-//     const tipPercentage = Number(button.dataset.tip);
+  // display results to the output elements
+  tipAmount.textContent = tipPerPerson.toFixed(2);
+  totalAmount.textContent = amountPerPerson.toFixed(2);
+}
 
-//     console.log("Selected tip: ", tipPercentage);
-//   });
-// });
+// Bill input listener
+billInput.addEventListener("input", updateCalculator);
 
+// Number of People input listener
+numberOfPeople.addEventListener("input", updateCalculator);
+
+// Preset percentage button select listener
 tipBtns.forEach((button) => {
   button.addEventListener("click", () => {
-    const tipPercentage = Number(button.dataset.tip);
+    selectedTip = Number(button.dataset.tip);
 
-    console.log("Selected tip: ", tipPercentage);
+    customTipInput.value = "";
+
+    tipBtns.forEach((btn) => {
+      btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    updateCalculator();
   });
 });
 
-resetBtn.disabled = false;
+// Custom percentage input listener
+customTipInput.addEventListener("input", () => {
+  selectedTip = null;
+
+  tipBtns.forEach((button) => {
+    button.classList.remove("active");
+  });
+
+  updateCalculator();
+});
+
+// Reset button listener
+// resetBtn.disabled = false;
 resetBtn.addEventListener("click", () => {
   console.log("calculator reset!");
 });
