@@ -25,15 +25,6 @@ body {
   color: var(--color-grey-500);
 }
 
-input {
-  outline: none;
-}
-
-input:hover,
-button:hover {
-  cursor: pointer;
-}
-
 /* Remove number input spinners */
 @layer utilities {
   .no-spinner {
@@ -44,5 +35,17 @@ button:hover {
   .no-spinner::-webkit-outer-spin-button {
     appearance: none;
     margin: 0;
+  }
+
+  .input-error {
+    border: 2px solid #e17052;
+  }
+
+  .input-error:hover {
+    border-color: #e17052;
+  }
+
+  .input-error:focus {
+    border-color: #e17052;
   }
 }

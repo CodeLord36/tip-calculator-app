@@ -4,6 +4,7 @@ import {
   calculateTipPerPerson,
   calculateTotalAmountPerPerson,
 } from "./calculator";
+import { resetCalculator, validateInput } from "./validation";
 
 console.log("Tip Calculator App is ready");
 
@@ -17,6 +18,9 @@ const tipBtns = document.querySelectorAll(".tipBtn");
 // Result elements
 const tipAmount = document.querySelector("#tipAmount");
 const totalAmount = document.querySelector("#totalAmount");
+
+// Error elements
+const peopleError = document.querySelector("#peopleError");
 
 //Reset Button
 const resetBtn = document.querySelector("#resetBtn");
@@ -35,21 +39,52 @@ function updateCalculator() {
       ? parseFloat(customTipInput.value)
       : selectedTip;
 
+  //show people error
+  const showPeopleError = numberOfPeople.value !== "" && people <= 0;
+  peopleError.textContent = showPeopleError ? "Can't be Zero" : "";
+
+  numberOfPeople.classList.toggle("input-error", showPeopleError);
+  // validate the inputs
+  const isValid = validateInput(bill, tipPercentage, people);
+
+  if (!isValid) {
+    tipAmount.textContent = "$0.00";
+    totalAmount.textContent = "$0.00";
+    return;
+  }
+
   // using the calculation functions
   const tip = calculateTip(bill, tipPercentage);
   const tipPerPerson = calculateTipPerPerson(tip, people);
   const amountPerPerson = calculateTotalAmountPerPerson(bill, tip, people);
 
   // display results to the output elements
-  tipAmount.textContent = tipPerPerson.toFixed(2);
-  totalAmount.textContent = amountPerPerson.toFixed(2);
+  tipAmount.textContent = `$${tipPerPerson.toFixed(2)}`;
+  totalAmount.textContent = `$${amountPerPerson.toFixed(2)}`;
+}
+
+// Reset function
+function updateResetButton() {
+  const hasValues =
+    billInput.value.trim() !== "" ||
+    customTipInput.value.trim() !== "" ||
+    numberOfPeople.value.trim() !== "" ||
+    selectedTip !== null;
+
+  resetBtn.disabled = !hasValues;
 }
 
 // Bill input listener
-billInput.addEventListener("input", updateCalculator);
+billInput.addEventListener("input", () => {
+  updateCalculator();
+  updateResetButton();
+});
 
 // Number of People input listener
-numberOfPeople.addEventListener("input", updateCalculator);
+numberOfPeople.addEventListener("input", () => {
+  updateCalculator();
+  updateResetButton();
+});
 
 // Preset percentage button select listener
 tipBtns.forEach((button) => {
@@ -65,6 +100,7 @@ tipBtns.forEach((button) => {
     button.classList.add("active");
 
     updateCalculator();
+    updateResetButton();
   });
 });
 
@@ -77,10 +113,24 @@ customTipInput.addEventListener("input", () => {
   });
 
   updateCalculator();
+  updateResetButton();
 });
 
 // Reset button listener
 // resetBtn.disabled = false;
 resetBtn.addEventListener("click", () => {
-  console.log("calculator reset!");
+  selectedTip = null;
+
+  resetCalculator(
+    billInput,
+    customTipInput,
+    numberOfPeople,
+    tipBtns,
+    tipAmount,
+    totalAmount,
+    peopleError,
+    resetBtn,
+  );
+
+  console.log("Calculator is reset!!!");
 });
